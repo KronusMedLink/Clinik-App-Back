@@ -18,7 +18,6 @@ def create_appointment(db: Session, appointment: AppointmentCreate):
     db_appointment = Appointment(
         patient_id=appointment.patient_id,
         doctor_id=appointment.doctor_id,
-        doctor_name=appointment.doctor_name,
         appointment_date=appointment.appointment_date,
         reason=appointment.reason
     )

@@ -8,7 +8,9 @@ class AppointmentBase(BaseModel):
 
 class AppointmentCreate(AppointmentBase):
     patient_id: int
-
+    doctor_id: int  
+    appointment_date: datetime
+    reason: str
 class AppointmentOut(AppointmentBase):
     id: int
     patient_id: int

@@ -1,7 +1,17 @@
-def test_create_and_list_departments(client):
-    response = client.post("/departments/", json={"name": "Cardiología Test"})
-    assert response.status_code in (200, 201)
+import uuid
+from fastapi.testclient import TestClient
+from app.main import app
 
-    list_response = client.get("/departments/")
-    assert list_response.status_code == 200
-    assert any(dep["name"] == "Cardiología Test" for dep in list_response.json())
+client = TestClient(app)
+
+def test_create_and_list_departments():
+    dept_name = "TestDept-" + uuid.uuid4().hex[:6]
+    response = client.post("/departments/", json={"name": dept_name})
+    assert response.status_code == 201
+    data = response.json()
+    assert data["name"] == dept_name
+
+    response = client.get("/departments/")
+    assert response.status_code == 200
+    departments = response.json()
+    assert any(d["name"] == dept_name for d in departments)

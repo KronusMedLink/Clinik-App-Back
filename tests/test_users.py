@@ -1,13 +1,19 @@
-def test_create_staff_user(client):
+import uuid
+from fastapi.testclient import TestClient
+from app.main import app
+
+client = TestClient(app)
+
+def test_create_staff_user():
+    username = "staff_test_" + uuid.uuid4().hex[:6]
+    email = f"{username}@clinic.com"
     response = client.post("/users/", json={
-        "username": "staffuser",
-        "email": "staff@clinic.com",
-        "password": "securepass123",
+        "username": username,
+        "email": email,
+        "password": "testpassword",
         "role": "staff"
     })
-    print("DEBUG:", response.status_code, response.json())
     assert response.status_code == 201
     data = response.json()
-    assert data["username"] == "staffuser"
-    assert data["email"] == "staff@clinic.com"
+    assert data["username"] == username
     assert data["role"] == "staff"
