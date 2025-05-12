@@ -6,6 +6,9 @@ from fastapi import FastAPI
 from app.database import engine, Base
 from app.api.api import api_router
 from app.models import user, patient, appointment, department
+from app.utils.init_db import init_admin
+
+
 
 app = FastAPI()
 
@@ -22,6 +25,8 @@ else:
     raise RuntimeError("Database not ready")
 
 Base.metadata.create_all(bind=engine)
+
+init_admin()
 
 # CORS
 app.add_middleware(
