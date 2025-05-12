@@ -7,12 +7,13 @@ import os
 def init_admin():
     db: Session = SessionLocal()
     admin_email = os.getenv("ADMIN_EMAIL", "admin@example.com")
+    admin_username = os.getenv("ADMIN_USERNAME", "admin")  
     admin_password = os.getenv("ADMIN_PASSWORD", "admin123")
 
     user = get_user_by_email(db, email=admin_email)
     if not user:
         admin_user = UserCreate(
-            username="admin",             
+            username=admin_username,       
             email=admin_email,
             password=admin_password,
             role="admin"
