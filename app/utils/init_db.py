@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.db.database import SessionLocal
+from app.database import SessionLocal
 from app.crud import crud_user
 from app.schemas.user import UserCreate
 from app.core.security import get_password_hash
